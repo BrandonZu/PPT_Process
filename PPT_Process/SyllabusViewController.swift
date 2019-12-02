@@ -1,20 +1,18 @@
 //
-//  ViewController.swift
+//  SyllabusViewController.swift
 //  PPT_Process
 //
-//  Created by BrandonZu on 2019/11/30.
+//  Created by BrandonZu on 2019/12/2.
 //  Copyright © 2019 DongjueZu. All rights reserved.
 //
 
+import Foundation
 import UIKit
 
-class ViewController: UIViewController {
-
+class SyllabusViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
-
-
+    
 }
-

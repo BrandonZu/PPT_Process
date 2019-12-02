@@ -53,6 +53,12 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>PPT-Pro would like to save photos to your photo library.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>PPT-Pro would like to use camera.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>PPT-Pro would like to acess to your photo library.</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

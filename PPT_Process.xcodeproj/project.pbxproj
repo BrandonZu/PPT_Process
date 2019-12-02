@@ -9,21 +9,27 @@
 /* Begin PBXBuildFile section */
 		163608822392C4BE00BFC570 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163608812392C4BE00BFC570 /* AppDelegate.swift */; };
 		163608842392C4BE00BFC570 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163608832392C4BE00BFC570 /* SceneDelegate.swift */; };
-		163608862392C4BE00BFC570 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163608852392C4BE00BFC570 /* ViewController.swift */; };
 		163608892392C4BE00BFC570 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 163608872392C4BE00BFC570 /* Main.storyboard */; };
 		1636088B2392C4C000BFC570 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1636088A2392C4C000BFC570 /* Assets.xcassets */; };
 		1636088E2392C4C000BFC570 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1636088C2392C4C000BFC570 /* LaunchScreen.storyboard */; };
+		163608962393E6AA00BFC570 /* VideoHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163608952393E6AA00BFC570 /* VideoHelper.swift */; };
+		163608982393FABD00BFC570 /* HomepageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163608972393FABD00BFC570 /* HomepageViewController.swift */; };
+		1636089A239431AA00BFC570 /* NotebookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16360899239431AA00BFC570 /* NotebookViewController.swift */; };
+		1636089C2394320700BFC570 /* SyllabusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1636089B2394320700BFC570 /* SyllabusViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1636087E2392C4BE00BFC570 /* PPT_Process.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PPT_Process.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		163608812392C4BE00BFC570 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		163608832392C4BE00BFC570 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		163608852392C4BE00BFC570 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		163608882392C4BE00BFC570 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1636088A2392C4C000BFC570 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1636088D2392C4C000BFC570 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1636088F2392C4C000BFC570 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		163608952393E6AA00BFC570 /* VideoHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoHelper.swift; sourceTree = "<group>"; };
+		163608972393FABD00BFC570 /* HomepageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomepageViewController.swift; sourceTree = "<group>"; };
+		16360899239431AA00BFC570 /* NotebookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotebookViewController.swift; sourceTree = "<group>"; };
+		1636089B2394320700BFC570 /* SyllabusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyllabusViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,7 +47,6 @@
 			isa = PBXGroup;
 			children = (
 				163608802392C4BE00BFC570 /* PPT_Process */,
-				1636087F2392C4BE00BFC570 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -51,18 +56,23 @@
 				1636087E2392C4BE00BFC570 /* PPT_Process.app */,
 			);
 			name = Products;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		163608802392C4BE00BFC570 /* PPT_Process */ = {
 			isa = PBXGroup;
 			children = (
+				1636087F2392C4BE00BFC570 /* Products */,
+				1636088A2392C4C000BFC570 /* Assets.xcassets */,
+				1636088F2392C4C000BFC570 /* Info.plist */,
 				163608812392C4BE00BFC570 /* AppDelegate.swift */,
 				163608832392C4BE00BFC570 /* SceneDelegate.swift */,
-				163608852392C4BE00BFC570 /* ViewController.swift */,
-				163608872392C4BE00BFC570 /* Main.storyboard */,
-				1636088A2392C4C000BFC570 /* Assets.xcassets */,
 				1636088C2392C4C000BFC570 /* LaunchScreen.storyboard */,
-				1636088F2392C4C000BFC570 /* Info.plist */,
+				163608872392C4BE00BFC570 /* Main.storyboard */,
+				163608972393FABD00BFC570 /* HomepageViewController.swift */,
+				16360899239431AA00BFC570 /* NotebookViewController.swift */,
+				1636089B2394320700BFC570 /* SyllabusViewController.swift */,
+				163608952393E6AA00BFC570 /* VideoHelper.swift */,
 			);
 			path = PPT_Process;
 			sourceTree = "<group>";
@@ -138,9 +148,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				163608862392C4BE00BFC570 /* ViewController.swift in Sources */,
 				163608822392C4BE00BFC570 /* AppDelegate.swift in Sources */,
+				163608982393FABD00BFC570 /* HomepageViewController.swift in Sources */,
 				163608842392C4BE00BFC570 /* SceneDelegate.swift in Sources */,
+				1636089A239431AA00BFC570 /* NotebookViewController.swift in Sources */,
+				163608962393E6AA00BFC570 /* VideoHelper.swift in Sources */,
+				1636089C2394320700BFC570 /* SyllabusViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
