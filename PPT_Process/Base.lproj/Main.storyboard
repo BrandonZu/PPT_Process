@@ -44,14 +44,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="当前处于课程“xxx”中" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="24P-hE-dPf">
-                                <rect key="frame" x="0.0" y="44" width="414" height="54"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="当前处于课程“xxx”中" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="24P-hE-dPf">
+                                <rect key="frame" x="0.0" y="44" width="414" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SAW-wF-mQF">
-                                <rect key="frame" x="0.0" y="106" width="414" height="669"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SAW-wF-mQF">
+                                <rect key="frame" x="0.0" y="72.5" width="414" height="702.5"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qrH-mE-9mE">
                                 <rect key="frame" x="0.0" y="783" width="414" height="30"/>
@@ -65,11 +65,13 @@
                         <constraints>
                             <constraint firstItem="24P-hE-dPf" firstAttribute="leading" secondItem="Hsb-hl-f0a" secondAttribute="leading" id="FFK-wd-1f3"/>
                             <constraint firstItem="qrH-mE-9mE" firstAttribute="leading" secondItem="Hsb-hl-f0a" secondAttribute="leading" id="Jya-C3-e9b"/>
+                            <constraint firstItem="SAW-wF-mQF" firstAttribute="top" secondItem="24P-hE-dPf" secondAttribute="bottom" constant="8" id="LYF-Lk-xhg"/>
                             <constraint firstItem="24P-hE-dPf" firstAttribute="top" secondItem="Hsb-hl-f0a" secondAttribute="top" id="SUJ-ED-7OQ"/>
                             <constraint firstItem="qrH-mE-9mE" firstAttribute="trailing" secondItem="Hsb-hl-f0a" secondAttribute="trailing" id="Yg5-VF-GkR"/>
                             <constraint firstItem="qrH-mE-9mE" firstAttribute="bottom" secondItem="Hsb-hl-f0a" secondAttribute="bottom" id="ao9-fj-20A"/>
                             <constraint firstItem="SAW-wF-mQF" firstAttribute="leading" secondItem="Hsb-hl-f0a" secondAttribute="leading" id="n1P-7S-mpK"/>
                             <constraint firstItem="SAW-wF-mQF" firstAttribute="trailing" secondItem="Hsb-hl-f0a" secondAttribute="trailing" id="ots-0a-5ul"/>
+                            <constraint firstItem="qrH-mE-9mE" firstAttribute="top" secondItem="SAW-wF-mQF" secondAttribute="bottom" constant="8" id="y4w-vF-qRj"/>
                             <constraint firstItem="24P-hE-dPf" firstAttribute="trailing" secondItem="Hsb-hl-f0a" secondAttribute="trailing" id="yXg-LT-cLL"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Hsb-hl-f0a"/>

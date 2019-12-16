@@ -32,43 +32,36 @@ class HomepageViewController: UIViewController {
     
     func promptPhoto() {
         
-        let prompt = UIAlertController(title: "Choose a Photo",
-                                       message: "Please choose a photo.",
-                                       preferredStyle: .actionSheet)
+        let prompt = UIAlertController(title: "选择照片", message: "请选择一个照片", preferredStyle: .actionSheet)
         
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         
-        func presentCamera(_ _: UIAlertAction) {
+        //从相机中选择
+        func fromCamera(_ _: UIAlertAction) {
             imagePicker.sourceType = .camera
             self.present(imagePicker, animated: true)
         }
         
-        let cameraAction = UIAlertAction(title: "Camera",
-                                         style: .default,
-                                         handler: presentCamera)
+        let cameraAction = UIAlertAction(title: "Camera", style: .default, handler: fromCamera)
         
-        func presentLibrary(_ _: UIAlertAction) {
+        //从Library中选择
+        func fromLibrary(_ _: UIAlertAction) {
             imagePicker.sourceType = .photoLibrary
             self.present(imagePicker, animated: true)
         }
         
-        let libraryAction = UIAlertAction(title: "Photo Library",
-                                          style: .default,
-                                          handler: presentLibrary)
+        let libraryAction = UIAlertAction(title: "Photo Library", style: .default, handler: fromLibrary)
         
-        func presentAlbums(_ _: UIAlertAction) {
+        //从相册中选择
+        func fromAlbums(_ _: UIAlertAction) {
             imagePicker.sourceType = .savedPhotosAlbum
             self.present(imagePicker, animated: true)
         }
         
-        let albumsAction = UIAlertAction(title: "Saved Albums",
-                                         style: .default,
-                                         handler: presentAlbums)
+        let albumsAction = UIAlertAction(title: "Saved Albums", style: .default, handler: fromAlbums)
         
-        let cancelAction = UIAlertAction(title: "Cancel",
-                                         style: .cancel,
-                                         handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         prompt.addAction(cameraAction)
         prompt.addAction(libraryAction)
@@ -99,13 +92,13 @@ func scaleAndOrient(image: UIImage) -> UIImage {
     
     var bounds = CGRect(x: 0, y: 0, width: width, height: height)
     
-    if width > maxResolution ||
-        height > maxResolution {
+    if width > maxResolution || height > maxResolution {
         let ratio = width / height
         if width > height {
             bounds.size.width = maxResolution
             bounds.size.height = round(maxResolution / ratio)
-        } else {
+        }
+        else {
             bounds.size.width = round(maxResolution * ratio)
             bounds.size.height = maxResolution
         }
@@ -113,6 +106,7 @@ func scaleAndOrient(image: UIImage) -> UIImage {
     
     let scaleRatio = bounds.size.width / width
     let orientation = image.imageOrientation
+    
     switch orientation {
     case .up:
         transform = .identity
@@ -142,6 +136,8 @@ func scaleAndOrient(image: UIImage) -> UIImage {
         bounds.size.height = bounds.size.width
         bounds.size.width = boundsHeight
         transform = CGAffineTransform(scaleX: -1, y: 1).rotated(by: .pi / 2.0)
+    default:
+        print("Unkown orientation!")
     }
     
     return UIGraphicsImageRenderer(size: bounds.size).image { rendererContext in
@@ -150,7 +146,8 @@ func scaleAndOrient(image: UIImage) -> UIImage {
         if orientation == .right || orientation == .left {
             context.scaleBy(x: -scaleRatio, y: scaleRatio)
             context.translateBy(x: -height, y: 0)
-        } else {
+        }
+        else {
             context.scaleBy(x: scaleRatio, y: -scaleRatio)
             context.translateBy(x: 0, y: -height)
         }
@@ -197,7 +194,8 @@ extension HomepageViewController: UIImagePickerControllerDelegate {
         imageView.image = nil
         
         // Account for image orientation by transforming view.
-        let correctedImage = scaleAndOrient(image: image)
+//        let correctedImage = scaleAndOrient(image: image)
+        let correctedImage = image
         
         // Place photo inside imageView.
         imageView.image = correctedImage
