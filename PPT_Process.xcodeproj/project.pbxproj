@@ -12,10 +12,15 @@
 		163608892392C4BE00BFC570 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 163608872392C4BE00BFC570 /* Main.storyboard */; };
 		1636088B2392C4C000BFC570 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1636088A2392C4C000BFC570 /* Assets.xcassets */; };
 		1636088E2392C4C000BFC570 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1636088C2392C4C000BFC570 /* LaunchScreen.storyboard */; };
-		163608962393E6AA00BFC570 /* VideoHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163608952393E6AA00BFC570 /* VideoHelper.swift */; };
 		163608982393FABD00BFC570 /* HomepageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163608972393FABD00BFC570 /* HomepageViewController.swift */; };
-		1636089A239431AA00BFC570 /* NotebookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16360899239431AA00BFC570 /* NotebookViewController.swift */; };
-		1636089C2394320700BFC570 /* SyllabusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1636089B2394320700BFC570 /* SyllabusViewController.swift */; };
+		16ACA76423AB1F4E004E8D0E /* Notebook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16ACA76323AB1F4E004E8D0E /* Notebook.swift */; };
+		16ACA76623AB1FC6004E8D0E /* NotebookTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16ACA76523AB1FC6004E8D0E /* NotebookTableViewCell.swift */; };
+		16ACA76823AB1FF8004E8D0E /* NotebookTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16ACA76723AB1FF8004E8D0E /* NotebookTableViewController.swift */; };
+		16ACA76F23AB20D0004E8D0E /* CourseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16ACA76D23AB20D0004E8D0E /* CourseCollectionViewCell.swift */; };
+		16ACA77023AB20D0004E8D0E /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16ACA76E23AB20D0004E8D0E /* Course.swift */; };
+		16ACA77223AB20F7004E8D0E /* CourseCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16ACA77123AB20F7004E8D0E /* CourseCollectionViewController.swift */; };
+		16ACA77423AB8215004E8D0E /* NoteTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16ACA77323AB8215004E8D0E /* NoteTableViewController.swift */; };
+		16ACA77623AB8231004E8D0E /* NoteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16ACA77523AB8231004E8D0E /* NoteTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,10 +31,15 @@
 		1636088A2392C4C000BFC570 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1636088D2392C4C000BFC570 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1636088F2392C4C000BFC570 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		163608952393E6AA00BFC570 /* VideoHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoHelper.swift; sourceTree = "<group>"; };
 		163608972393FABD00BFC570 /* HomepageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomepageViewController.swift; sourceTree = "<group>"; };
-		16360899239431AA00BFC570 /* NotebookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotebookViewController.swift; sourceTree = "<group>"; };
-		1636089B2394320700BFC570 /* SyllabusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyllabusViewController.swift; sourceTree = "<group>"; };
+		16ACA76323AB1F4E004E8D0E /* Notebook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notebook.swift; sourceTree = "<group>"; };
+		16ACA76523AB1FC6004E8D0E /* NotebookTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotebookTableViewCell.swift; sourceTree = "<group>"; };
+		16ACA76723AB1FF8004E8D0E /* NotebookTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotebookTableViewController.swift; sourceTree = "<group>"; };
+		16ACA76D23AB20D0004E8D0E /* CourseCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseCollectionViewCell.swift; sourceTree = "<group>"; };
+		16ACA76E23AB20D0004E8D0E /* Course.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
+		16ACA77123AB20F7004E8D0E /* CourseCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseCollectionViewController.swift; sourceTree = "<group>"; };
+		16ACA77323AB8215004E8D0E /* NoteTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTableViewController.swift; sourceTree = "<group>"; };
+		16ACA77523AB8231004E8D0E /* NoteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,9 +80,14 @@
 				1636088C2392C4C000BFC570 /* LaunchScreen.storyboard */,
 				163608872392C4BE00BFC570 /* Main.storyboard */,
 				163608972393FABD00BFC570 /* HomepageViewController.swift */,
-				16360899239431AA00BFC570 /* NotebookViewController.swift */,
-				1636089B2394320700BFC570 /* SyllabusViewController.swift */,
-				163608952393E6AA00BFC570 /* VideoHelper.swift */,
+				16ACA76323AB1F4E004E8D0E /* Notebook.swift */,
+				16ACA76523AB1FC6004E8D0E /* NotebookTableViewCell.swift */,
+				16ACA76723AB1FF8004E8D0E /* NotebookTableViewController.swift */,
+				16ACA77523AB8231004E8D0E /* NoteTableViewCell.swift */,
+				16ACA77323AB8215004E8D0E /* NoteTableViewController.swift */,
+				16ACA76E23AB20D0004E8D0E /* Course.swift */,
+				16ACA76D23AB20D0004E8D0E /* CourseCollectionViewCell.swift */,
+				16ACA77123AB20F7004E8D0E /* CourseCollectionViewController.swift */,
 			);
 			path = PPT_Process;
 			sourceTree = "<group>";
@@ -148,12 +163,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				16ACA77023AB20D0004E8D0E /* Course.swift in Sources */,
 				163608822392C4BE00BFC570 /* AppDelegate.swift in Sources */,
+				16ACA76F23AB20D0004E8D0E /* CourseCollectionViewCell.swift in Sources */,
 				163608982393FABD00BFC570 /* HomepageViewController.swift in Sources */,
 				163608842392C4BE00BFC570 /* SceneDelegate.swift in Sources */,
-				1636089A239431AA00BFC570 /* NotebookViewController.swift in Sources */,
-				163608962393E6AA00BFC570 /* VideoHelper.swift in Sources */,
-				1636089C2394320700BFC570 /* SyllabusViewController.swift in Sources */,
+				16ACA77223AB20F7004E8D0E /* CourseCollectionViewController.swift in Sources */,
+				16ACA77423AB8215004E8D0E /* NoteTableViewController.swift in Sources */,
+				16ACA76823AB1FF8004E8D0E /* NotebookTableViewController.swift in Sources */,
+				16ACA76623AB1FC6004E8D0E /* NotebookTableViewCell.swift in Sources */,
+				16ACA76423AB1F4E004E8D0E /* Notebook.swift in Sources */,
+				16ACA77623AB8231004E8D0E /* NoteTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
