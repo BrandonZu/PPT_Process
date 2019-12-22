@@ -14,6 +14,8 @@ class NotebookTableViewController: UITableViewController {
     // Properties
     var notebookList = [Notebook]()
     
+    var imageNeedClassify: [(UIImage, Date)] = []
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         
@@ -28,10 +30,16 @@ class NotebookTableViewController: UITableViewController {
         
         
         // Add Notification Observer
+        // Take A PPT
         NotificationCenter.default.addObserver(self, selector: #selector(receiveNewPPT(notice:)), name: NSNotification.Name(rawValue: "NewPPT"), object: nil)
+        
+        // Course Actions
         NotificationCenter.default.addObserver(self, selector: #selector(receiveNewCourse(notice:)), name: NSNotification.Name(rawValue: "NewCourse"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(receiveChangeCourse(notice:)), name: NSNotification.Name(rawValue: "ChangeCourse"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(receiveDeleteCourse(notice:)), name: NSNotification.Name(rawValue: "DeleteCourse"), object: nil)
+        
+        // Wait for the answer
+        NotificationCenter.default.addObserver(self, selector: #selector(receiveCourseAnswer(notice:)), name: NSNotification.Name(rawValue: "CourseAnswer"), object: nil)
     }
     
     override func viewDidLoad() {
@@ -45,12 +53,15 @@ class NotebookTableViewController: UITableViewController {
     }
     // MARK: - Notification Observer Methods
     @objc func receiveNewPPT(notice: Notification) {
+        let current = Date()
         guard let ppt = notice.object as? UIImage else {
             fatalError("Notification wrong: Receive wrong ppt")
         }
-        print("PPT received", ppt)
-        notebookList[0].photos.append(ppt)
-        
+        self.imageNeedClassify.append((ppt, current))
+        // Ask for Course
+        let CourseRequest = Notification(name: Notification.Name(rawValue: "CourseRequest"), object: current)
+        NotificationCenter.default.post(CourseRequest)
+        print("After send post!")
     }
     
     @objc func receiveNewCourse(notice: Notification) {
@@ -99,6 +110,10 @@ class NotebookTableViewController: UITableViewController {
             }
         }
         fatalError("Target notebook not found")
+    }
+    
+    @objc func receiveCourseAnswer(notice: Notification) {
+        
     }
     
     // MARK: - Table view data source
