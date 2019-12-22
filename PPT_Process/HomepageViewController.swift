@@ -5,7 +5,7 @@
 //  Created by BrandonZu on 2019/11/30.
 //  Copyright © 2019 DongjueZu. All rights reserved.
 //
-
+import Foundation
 import UIKit
 import MobileCoreServices
 import Photos
@@ -35,7 +35,8 @@ class HomepageViewController: UIViewController {
     // MARK: - Actions
     
     @IBAction func SaveImageTouched(_ sender: UIBarButtonItem) {
-        
+        let NewPPT: Notification = Notification(name: NSNotification.Name(rawValue: "NewPPT"), object: self.imageView.image)
+        NotificationCenter.default.post(NewPPT)
     }
     
     @IBAction func TakePhotoTouched(_ sender: UIButton) {
@@ -283,9 +284,9 @@ class HomepageViewController: UIViewController {
                 MaxRect.origin.y *= scale
             }
             
-            print("before", MaxRect)
+//            print("before", MaxRect)
             MaxRect = self.correctRect(cropRect: MaxRect, bounds: self.tmpImage!.size)
-            print("after", MaxRect)
+//            print("after", MaxRect)
             
             if let croppedImage = self.tmpImage?.cgImage?.cropping(to: MaxRect) {
                 self.tmpImage = UIImage(cgImage: croppedImage)

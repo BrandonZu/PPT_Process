@@ -72,7 +72,7 @@ class CourseCollectionViewController: UICollectionViewController {
         }
         
         let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
-        let okAction = UIAlertAction(title: "确认", style: .default) { action in
+        let okAction = UIAlertAction(title: "确认", style: .destructive) { action in
             let tmpCourse: Course = Course()
             guard let name = inputCourse.textFields![0].text,
                 let day = inputCourse.textFields![1].text,
@@ -165,18 +165,20 @@ class CourseCollectionViewController: UICollectionViewController {
                 }
             }
             
-            // Insert successfully
-//            print("Reload items!")
+            // Reload cells in syllabus
             for i in tmpCourse.start...tmpCourse.end {
                 self.courseList[i - 1][tmpCourse.weekday - 1] = tmpCourse
             }
             self.collectionView.reloadItems(at: self.getCourseIndexPath(course: tmpCourse))
             
+            // Reload row in notebook
+            let NewCourse: Notification = Notification(name: Notification.Name(rawValue: "NewCourse"), object: tmpCourse)
+            NotificationCenter.default.post(NewCourse)
         }
         
         inputCourse.addAction(okAction)
         inputCourse.addAction(cancelAction)
-
+        
         self.present(inputCourse, animated: true, completion: nil)
     }
 
@@ -209,7 +211,7 @@ class CourseCollectionViewController: UICollectionViewController {
                 endDetail.text = String(originalCourse.end)
             }
             let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
-            let okAction = UIAlertAction(title: "保存", style: .default) { action in
+            let okAction = UIAlertAction(title: "保存", style: .destructive) { action in
                 let tmpCourse: Course = Course()
                 guard let name = detail.textFields![0].text,
                     let day = detail.textFields![1].text,
@@ -293,7 +295,7 @@ class CourseCollectionViewController: UICollectionViewController {
     //            print(tmpCourse)
                 // Insert the course
                 for i in tmpCourse.start...tmpCourse.end {
-                    if !self.courseList[i - 1][tmpCourse.weekday - 1].isEmpty() && self.courseList[i - 1][tmpCourse.weekday - 1].name != tmpCourse.name {
+                    if !self.courseList[i - 1][tmpCourse.weekday - 1].isEmpty() && self.courseList[i - 1][tmpCourse.weekday - 1].name != originalCourse.name {
                         let Alert = UIAlertController(title: "修改课程失败", message: "目标位置已有课程", preferredStyle: .alert)
                         let okAction = UIAlertAction(title: "好的", style: .default, handler: nil)
                         Alert.addAction(okAction)
@@ -315,7 +317,12 @@ class CourseCollectionViewController: UICollectionViewController {
                 IndexList = Array(Set(IndexList))
                 print(IndexList)
                 
+                // Reload cells in syllabus
                 self.collectionView.reloadItems(at: IndexList)
+                
+                // Reload row in notebook
+                let ChangeCourse: Notification = Notification(name: Notification.Name(rawValue: "ChangeCourse"), object: [originalCourse, tmpCourse])
+                NotificationCenter.default.post(ChangeCourse)
                 
             }
             detail.addAction(okAction)
@@ -337,15 +344,21 @@ class CourseCollectionViewController: UICollectionViewController {
         }
         else {
             let course = courseList[row - 1][column - 1]
-            let deleteConfirm = UIAlertController(title: "是否要删除课程" + course.name, message: nil, preferredStyle: .alert)
+            let deleteConfirm = UIAlertController(title: "是否要删除课程:" + course.name, message: nil, preferredStyle: .alert)
             let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
-            let okAction = UIAlertAction(title: "确认", style: .default) { action in
+            let okAction = UIAlertAction(title: "确认", style: .destructive) { action in
                 // Delete course in courselist
                 for i in course.start...course.end {
                     self.courseList[i - 1][course.weekday - 1] = Course()
                 }
+                
+                // Reload cells in syllabus
                 self.collectionView.reloadItems(at: self.getCourseIndexPath(course: course))
-                return
+                
+                // Reload row in notebook
+                let DeleteCourse: Notification = Notification(name: Notification.Name(rawValue: "DeleteCourse"), object: course)
+                NotificationCenter.default.post(DeleteCourse)
+
             }
             deleteConfirm.addAction(okAction)
             deleteConfirm.addAction(cancelAction)

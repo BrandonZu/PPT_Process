@@ -12,14 +12,14 @@ class Notebook: NSObject {
 
     //MARK: Properties
     var name: String
-    var photos: [UIImage?]
+    var photos: [UIImage]
     
     //MARK: Initialization
     init(name: String = "") {
         
         // Initialize all the properties
         self.name = name
-        self.photos = [UIImage?]()
+        self.photos = [UIImage]()
     }
     
     func isEmpty() -> Bool {

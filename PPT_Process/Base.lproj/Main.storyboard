@@ -39,7 +39,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="name" destination="5Pg-8Z-Thz" id="hXW-Ez-4kp"/>
-                                    <segue destination="roD-DN-H2Y" kind="show" id="LbN-wp-yfx"/>
+                                    <segue destination="roD-DN-H2Y" kind="show" identifier="notebookDetail" id="LbN-wp-yfx"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -58,20 +58,21 @@
         <scene sceneID="nLY-sk-XVk">
             <objects>
                 <tableViewController id="roD-DN-H2Y" customClass="NoteTableViewController" customModule="PPT_Process" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" indicatorStyle="white" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="pnc-cv-N5s">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" indicatorStyle="white" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="pnc-cv-N5s">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="NoteCell" rowHeight="300" translatesAutoresizingMaskIntoConstraints="NO" id="7iq-yV-pYC" customClass="NoteTableViewCell" customModule="PPT_Process" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="414" height="300"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleAspectFit" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="NoteCell" translatesAutoresizingMaskIntoConstraints="NO" id="7iq-yV-pYC" customClass="NoteTableViewCell" customModule="PPT_Process" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="414" height="3024.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7iq-yV-pYC" id="RLI-hC-ZkH">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="300"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7iq-yV-pYC" id="RLI-hC-ZkH">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="3024.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wea-qo-2WE">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="300"/>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PPT1" translatesAutoresizingMaskIntoConstraints="NO" id="wea-qo-2WE">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="3024.5"/>
+                                            <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                                         </imageView>
                                     </subviews>
                                     <constraints>
@@ -92,8 +93,15 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="笔记详情" id="wsM-Cz-bxO">
-                        <barButtonItem key="rightBarButtonItem" title="导出" id="vh2-7f-aod"/>
+                        <barButtonItem key="rightBarButtonItem" title="导出" id="vh2-7f-aod">
+                            <connections>
+                                <action selector="exportPDF:" destination="roD-DN-H2Y" id="TCh-Zp-iVN"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="navigationBar" destination="wsM-Cz-bxO" id="cvM-3F-gpq"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cmv-ee-QxE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -286,6 +294,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="PPT1" width="2016" height="1512"/>
         <image name="book" catalog="system" width="64" height="50"/>
         <image name="plus" catalog="system" width="64" height="56"/>
     </resources>
