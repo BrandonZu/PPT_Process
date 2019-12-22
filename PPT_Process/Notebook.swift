@@ -10,22 +10,19 @@ import UIKit
 
 class Notebook: NSObject {
 
-
     //MARK: Properties
     var name: String
     var photos: [UIImage?]
     
-    
     //MARK: Initialization
-    init?(name: String) {
-        
-        guard !name.isEmpty else {
-            return nil
-        }
+    init(name: String = "") {
         
         // Initialize all the properties
         self.name = name
         self.photos = [UIImage?]()
     }
-
+    
+    func isEmpty() -> Bool {
+        return name == ""
+    }
 }

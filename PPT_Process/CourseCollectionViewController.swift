@@ -18,14 +18,23 @@ class CourseCollectionViewController: UICollectionViewController {
     // Store all the list
     var courseList: [[Course]] = []
 
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
-        // TmpEmptyCouses
+        // Add Gesture Recognizer
+        let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(singleTapCollectionView(gesture:)))
+        singleTapGesture.numberOfTapsRequired = 1
+        singleTapGesture.numberOfTouchesRequired = 1
+        self.collectionView.addGestureRecognizer(singleTapGesture)
+        
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(longPressCollectionView(gesture:)))
+        longPressGesture.minimumPressDuration = 0.5
+        self.collectionView.addGestureRecognizer(longPressGesture)
+        
+        // TEST
         for _ in 1...(rowNum - 1) {
             var tmp = [Course]()
             for _ in 1...(columnNum - 1) {
@@ -64,7 +73,7 @@ class CourseCollectionViewController: UICollectionViewController {
         
         let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
         let okAction = UIAlertAction(title: "确认", style: .default) { action in
-            var tmpCourse: Course = Course()
+            let tmpCourse: Course = Course()
             guard let name = inputCourse.textFields![0].text,
                 let day = inputCourse.textFields![1].text,
                 let startStr = inputCourse.textFields![2].text,
@@ -157,7 +166,7 @@ class CourseCollectionViewController: UICollectionViewController {
             }
             
             // Insert successfully
-            print("Reload items!")
+//            print("Reload items!")
             for i in tmpCourse.start...tmpCourse.end {
                 self.courseList[i - 1][tmpCourse.weekday - 1] = tmpCourse
             }
@@ -171,16 +180,180 @@ class CourseCollectionViewController: UICollectionViewController {
         self.present(inputCourse, animated: true, completion: nil)
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
+    @objc func singleTapCollectionView(gesture: UITapGestureRecognizer) {
+        let point: CGPoint = gesture.location(in: self.collectionView)
+        let selectedIndexPath = self.collectionView.indexPathForItem(at: point)!
+        let column = selectedIndexPath.item % columnNum
+        let row = selectedIndexPath.item / columnNum
+        if column == 0 || row == 0 {
+            return
+        }
+        print("Tap at \((row, column))")
+        // Select a cell
+        if courseList[row - 1][column - 1].isEmpty() {
+            return
+        }
+        else {
+            let originalCourse = courseList[row - 1][column - 1]
+            let detail = UIAlertController(title: originalCourse.name, message: nil, preferredStyle: .alert)
+            detail.addTextField() { nameDetail in
+                nameDetail.text = originalCourse.name
+            }
+            detail.addTextField() { weekdayDetail in
+                weekdayDetail.text = originalCourse.getWeekday()
+            }
+            detail.addTextField() { startDetail in
+                startDetail.text = String(originalCourse.start)
+            }
+            detail.addTextField() { endDetail in
+                endDetail.text = String(originalCourse.end)
+            }
+            let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+            let okAction = UIAlertAction(title: "保存", style: .default) { action in
+                let tmpCourse: Course = Course()
+                guard let name = detail.textFields![0].text,
+                    let day = detail.textFields![1].text,
+                    let startStr = detail.textFields![2].text,
+                    let endStr = detail.textFields![3].text else {
+                        let Alert = UIAlertController(title: "修改错误", message: "输入错误", preferredStyle: .alert)
+                        let okAction = UIAlertAction(title: "好的", style: .default, handler: nil)
+                        Alert.addAction(okAction)
+                        self.present(Alert, animated: true, completion: nil)
+                        return
+                }
+                
+                guard let start = Int(startStr), let end = Int(endStr) else {
+                    let Alert = UIAlertController(title: "修改课程失败", message: "课程开始、结束时间为整数", preferredStyle: .alert)
+                    let okAction = UIAlertAction(title: "好的", style: .default, handler: nil)
+                    Alert.addAction(okAction)
+                    self.present(Alert, animated: true, completion: nil)
+                    return
+                }
+                
+                if name != "" {
+                    tmpCourse.name = name
+                }
+                else {
+                    let Alert = UIAlertController(title: "修改课程失败", message: "输入姓名不能为空！", preferredStyle: .alert)
+                    let okAction = UIAlertAction(title: "好的", style: .default) { action in
+                        self.present(detail, animated: true, completion: nil)
+                    }
+                    Alert.addAction(okAction)
+                    self.present(Alert, animated: true, completion: nil)
+                    return
+                }
+                
+                if (day == "周一" || day == "周二" || day == "周三" || day == "周四" || day == "周五") {
+                    switch day {
+                    case "周一": tmpCourse.weekday = 1
+                    case "周二": tmpCourse.weekday = 2
+                    case "周三": tmpCourse.weekday = 3
+                    case "周四": tmpCourse.weekday = 4
+                    case "周五": tmpCourse.weekday = 5
+                    default:
+                        tmpCourse.weekday = 0
+                    }
+                }
+                else {
+                    let Alert = UIAlertController(title: "修改课程失败", message: "课程日期必须输入周一到周五!", preferredStyle: .alert)
+                    let okAction = UIAlertAction(title: "好的", style: .default) { action in
+                        self.present(detail, animated: true, completion: nil)
+                    }
+                    Alert.addAction(okAction)
+                    self.present(Alert, animated: true, completion: nil)
+                    return
+                }
+                
+                if start >= 1 && start <= 11 {
+                    tmpCourse.start = start
+                }
+                else {
+                    let Alert = UIAlertController(title: "修改课程失败", message: "课程开始时间必须为整数且在1-11", preferredStyle: .alert)
+                    let okAction = UIAlertAction(title: "好的", style: .default) { action in
+                        self.present(detail, animated: true, completion: nil)
+                    }
+                    Alert.addAction(okAction)
+                    self.present(Alert, animated: true, completion: nil)
+                    return
+                }
+                
+                if end >= tmpCourse.start && end <= 11 {
+                    tmpCourse.end = end
+                }
+                else {
+                    let Alert = UIAlertController(title: "修改课程失败", message: "课程结束时间必须为整数且在1-11", preferredStyle: .alert)
+                    let okAction = UIAlertAction(title: "好的", style: .default) { action in
+                        self.present(detail, animated: true, completion: nil)
+                    }
+                    Alert.addAction(okAction)
+                    self.present(Alert, animated: true, completion: nil)
+                    return
+                }
+                
+    //            print(tmpCourse)
+                // Insert the course
+                for i in tmpCourse.start...tmpCourse.end {
+                    if !self.courseList[i - 1][tmpCourse.weekday - 1].isEmpty() && self.courseList[i - 1][tmpCourse.weekday - 1].name != tmpCourse.name {
+                        let Alert = UIAlertController(title: "修改课程失败", message: "目标位置已有课程", preferredStyle: .alert)
+                        let okAction = UIAlertAction(title: "好的", style: .default, handler: nil)
+                        Alert.addAction(okAction)
+                        self.present(Alert, animated: true, completion: nil)
+                        return
+                    }
+                }
+                
+                // Delete old course
+                for i in originalCourse.start...originalCourse.end {
+                    self.courseList[i - 1][originalCourse.weekday - 1] = Course()
+                }
+                // Update new course
+                for i in tmpCourse.start...tmpCourse.end {
+                    self.courseList[i - 1][tmpCourse.weekday - 1] = tmpCourse
+                }
+                var IndexList = self.getCourseIndexPath(course: tmpCourse) + self.getCourseIndexPath(course: originalCourse)
+                print(IndexList)
+                IndexList = Array(Set(IndexList))
+                print(IndexList)
+                
+                self.collectionView.reloadItems(at: IndexList)
+                
+            }
+            detail.addAction(okAction)
+            detail.addAction(cancelAction)
+            self.present(detail, animated: true, completion: nil)
+        }
     }
-    */
-
+    
+    @objc func longPressCollectionView(gesture: UILongPressGestureRecognizer) {
+        let point: CGPoint = gesture.location(in: self.collectionView)
+        let selectedIndexPath = self.collectionView.indexPathForItem(at: point)!
+        let column = selectedIndexPath.item % columnNum
+        let row = selectedIndexPath.item / columnNum
+        if column == 0 || row == 0 {
+            return
+        }
+        if courseList[row - 1][column - 1].isEmpty() {
+            return
+        }
+        else {
+            let course = courseList[row - 1][column - 1]
+            let deleteConfirm = UIAlertController(title: "是否要删除课程" + course.name, message: nil, preferredStyle: .alert)
+            let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+            let okAction = UIAlertAction(title: "确认", style: .default) { action in
+                // Delete course in courselist
+                for i in course.start...course.end {
+                    self.courseList[i - 1][course.weekday - 1] = Course()
+                }
+                self.collectionView.reloadItems(at: self.getCourseIndexPath(course: course))
+                return
+            }
+            deleteConfirm.addAction(okAction)
+            deleteConfirm.addAction(cancelAction)
+            self.present(deleteConfirm, animated: true, completion: nil)
+        }
+        
+    }
+    
     // MARK: - UICollectionViewDataSource
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -197,7 +370,8 @@ class CourseCollectionViewController: UICollectionViewController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! CourseCollectionViewCell
         
         cell.content.numberOfLines = 5
-        // Configure the cell
+        
+        // Configure the look
         if indexPath.item == 0 {
             cell.content.text = "Syllabus"
         }
@@ -215,13 +389,11 @@ class CourseCollectionViewController: UICollectionViewController {
             }
         }
         else if indexPath.item % columnNum == 0 {
-            // Display the No. of class
             cell.backgroundColor = .lightGray
-            cell.content.text = String(indexPath.item / 6)
+            cell.content.text = String(indexPath.item / columnNum)
         }
         else {
             cell.backgroundColor = .white
-//            print(indexPath.item, indexPath.item / 6 - 1, indexPath.item % 6 - 1)
             cell.content.text = courseList[indexPath.item / columnNum - 1][indexPath.item % columnNum - 1].name
         }
         

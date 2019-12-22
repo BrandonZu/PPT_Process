@@ -26,4 +26,17 @@ class Course: NSObject {
     func isEmpty() -> Bool {
         return name == ""
     }
+    
+    func getWeekday() -> String {
+        switch weekday {
+        case 1: return "周一"
+        case 2: return "周二"
+        case 3: return "周三"
+        case 4: return "周四"
+        case 5: return "周五"
+        default:
+            return "未知"
+        }
+        
+    }
 }
