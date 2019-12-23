@@ -20,11 +20,10 @@ class NotebookTableViewController: UITableViewController {
         super.init(coder: coder)
         
         // Add default notebook
-        notebookList.append(Notebook(name: "未分类笔记"))
         let image1 = UIImage(named: "PPT1")
         let image2 = UIImage(named: "PPT2")
         let image3 = UIImage(named: "PPT3")
-        notebookList[0].photos.append(contentsOf: [image1!, image2!, image3!])
+        notebookList.append(Notebook(name: "未分类笔记", notes: [image1!, image2!, image3!]))
         
         // Load data
         
@@ -62,7 +61,7 @@ class NotebookTableViewController: UITableViewController {
         }
         self.imageNeedClassify.append(ppt)
         // Ask for Course
-        let CourseRequest = Notification(name: Notification.Name(rawValue: "CourseRequest"), object: current)
+        let CourseRequest = Notification(name: Notification.Name(rawValue: "CourseRequest"), object: current, userInfo: ["info":"PPTRequest"])
         NotificationCenter.default.post(CourseRequest)
     }
     
@@ -119,7 +118,7 @@ class NotebookTableViewController: UITableViewController {
             // Classify the oldest image
             for i in 1..<notebookList.count {
                 if notebookList[i].name == answer.name {
-                    notebookList[i].photos.append(imageNeedClassify[0])
+                    notebookList[i].notes.append(imageNeedClassify[0])
                     imageNeedClassify.remove(at: 0)
                     break
                 }
@@ -127,7 +126,7 @@ class NotebookTableViewController: UITableViewController {
         }
         else {
             // No course meet the requirement
-            notebookList[0].photos.append(imageNeedClassify[0])
+            notebookList[0].notes.append(imageNeedClassify[0])
             imageNeedClassify.remove(at: 0)
         }
         
@@ -208,7 +207,8 @@ class NotebookTableViewController: UITableViewController {
             // Set the title of the detail view
             detailViewController.navigationBar.title = notebookList[indexPath.row].name
             // Set notes to show
-            detailViewController.noteList = notebookList[indexPath.row].photos
+            detailViewController.name = notebookList[indexPath.row].name
+            detailViewController.noteList = notebookList[indexPath.row].notes
         }
     }
     

@@ -107,8 +107,14 @@ class CourseCollectionViewController: UICollectionViewController {
         }
         
         // Send the answer
-        let CourseAnswer = Notification(name: Notification.Name("CourseAnswer"), object: resultCourse)
-        NotificationCenter.default.post(CourseAnswer)
+        if (notice.userInfo!["info"] as! String) == "PPTRequest" {
+            let CourseAnswer = Notification(name: Notification.Name("CourseAnswer"), object: resultCourse)
+            NotificationCenter.default.post(CourseAnswer)
+        }
+        else {
+            let CourseAnswer = Notification(name: Notification.Name("CurCourseAnswer"), object: resultCourse)
+            NotificationCenter.default.post(CourseAnswer)
+        }
     }
     
     // MARK: - Actions

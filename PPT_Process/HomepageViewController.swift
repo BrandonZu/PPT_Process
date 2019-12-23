@@ -5,7 +5,6 @@
 //  Created by BrandonZu on 2019/11/30.
 //  Copyright © 2019 DongjueZu. All rights reserved.
 //
-import Foundation
 import UIKit
 import MobileCoreServices
 import Photos
@@ -16,6 +15,8 @@ import AVFoundation
 class HomepageViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     
+    @IBOutlet weak var navigationTitle: UINavigationItem!
+    var timer : Timer? = nil
     
     // Layer into which to draw bounding box paths.
     var pathLayer: CALayer?
@@ -28,15 +29,32 @@ class HomepageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Get current time
         
+        NotificationCenter.default.addObserver(self, selector: #selector(receiveCurCourseAnswer(notice:)), name: NSNotification.Name(rawValue: "CurCourseAnswer"), object: nil)
+        
+        self.timer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { timer in
+            let CourseRequest = Notification(name: Notification.Name(rawValue: "CourseRequest"), object: Date(), userInfo: ["info":"RepeatRequest"])
+            NotificationCenter.default.post(CourseRequest)
+        }
+        self.timer!.fire()
     }
     
     // MARK: - Actions
     
+    @objc func receiveCurCourseAnswer(notice: Notification) {
+        print("get answer")
+        if let answer = notice.object as? Course {
+            navigationItem.title = "当前课程:" + answer.name
+        }
+        else {
+            navigationItem.title = "当前无课程"
+        }
+    }
+    
     @IBAction func SaveImageTouched(_ sender: UIBarButtonItem) {
         let NewPPT: Notification = Notification(name: NSNotification.Name(rawValue: "NewPPT"), object: self.imageView.image)
         NotificationCenter.default.post(NewPPT)
+        presentNotice("保存成功")
     }
     
     @IBAction func TakePhotoTouched(_ sender: UIButton) {

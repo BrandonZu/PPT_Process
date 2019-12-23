@@ -7,21 +7,52 @@
 //
 
 import UIKit
+import os.log
 
-class Notebook: NSObject {
-
+class Notebook: NSObject, NSCoding {
+    
     //MARK: Properties
     var name: String
-    var photos: [UIImage]
+    var notes: [UIImage]
     
-    //MARK: Initialization
-    init(name: String = "") {
+    //MARK: Archiving Paths
+    
+    
+    //MARK: Types
+    struct PropertyKey {
+        static let name = "name"
+        static let notes = "notes"
+    }
+    
+    func encode(with coder: NSCoder) {
+        coder.encode(name, forKey: PropertyKey.name)
+        coder.encode(notes, forKey: PropertyKey.notes)
+    }
+
+    //MARK: Initializer
+    
+    init(name: String = "", notes: [UIImage] = []) {
         
         // Initialize all the properties
         self.name = name
-        self.photos = [UIImage]()
+        self.notes = notes
     }
     
+    required convenience init?(coder: NSCoder) {
+        
+        guard let name = coder.decodeObject(forKey: PropertyKey.name) as? String else {
+            os_log("Unable to decode the name for a Notebook Object.", log: OSLog.default, type: .debug)
+            return nil
+        }
+        
+        guard let notes = coder.decodeObject(forKey: PropertyKey.notes) as? [UIImage] else {
+            os_log("Unable to decode the name for a Notebook Object.", log: OSLog.default, type: .debug)
+            return nil
+        }
+        
+        self.init(name: name)
+    }
+
     func isEmpty() -> Bool {
         return name == ""
     }

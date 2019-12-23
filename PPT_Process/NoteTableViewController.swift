@@ -7,11 +7,12 @@
 //
 
 import UIKit
-
+import PDFKit
 private let reuseIdentifier = "NoteCell"
 
 class NoteTableViewController: UITableViewController {
     // Properties
+    var name = ""
     var noteList = [UIImage]()
     @IBOutlet weak var navigationBar: UINavigationItem!
     
@@ -114,8 +115,31 @@ class NoteTableViewController: UITableViewController {
     // MARK: - Actions
     @IBAction func exportPDF(_ sender: UIBarButtonItem) {
         // Convert all the notes to a pdf file
+        let pdf = PDFDocument()
+        for i in 0..<noteList.count {
+            pdf.insert(PDFPage(image: noteList[i])!, at: i)
+        }
         
+        let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         
+        let path = documentDirectory.appendingPathComponent(self.name + ".pdf")
+        print(path)
+        do {
+            try pdf.dataRepresentation()!.write(to: path)
+        } catch {
+            fatalError("Fail to convert to pdf!")
+        }
+
+        let alertController = UIAlertController(title: "导出成功",
+                                                message: "",
+                                                preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK",
+                                     style: .default) { _ in
+                                        // Do nothing -- simply dismiss alert.
+        }
+        alertController.addAction(okAction)
+        self.present(alertController, animated: true, completion: nil)
+
     }
     
     // MARK: - Table view data source

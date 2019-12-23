@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="n2x-et-Xdb">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="n2x-et-Xdb">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -64,14 +64,14 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleAspectFit" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="NoteCell" translatesAutoresizingMaskIntoConstraints="NO" id="7iq-yV-pYC" customClass="NoteTableViewCell" customModule="PPT_Process" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="414" height="3024.5"/>
+                                <rect key="frame" x="0.0" y="28" width="414" height="1512.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7iq-yV-pYC" id="RLI-hC-ZkH">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="3024.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="1512.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PPT1" translatesAutoresizingMaskIntoConstraints="NO" id="wea-qo-2WE">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="3024.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="1512.5"/>
                                             <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                                         </imageView>
                                     </subviews>
@@ -150,6 +150,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="imageView" destination="SAW-wF-mQF" id="IYs-7o-Iiy"/>
+                        <outlet property="navigationTitle" destination="eiG-5A-z7i" id="Pjw-tg-l4f"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j0H-60-mB7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -179,7 +180,7 @@
         <scene sceneID="yFi-XK-vmz">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wh9-fm-b2M" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="笔记本" id="W6R-ZL-Sbp"/>
+                    <tabBarItem key="tabBarItem" title="笔记本" image="book" catalog="system" id="W6R-ZL-Sbp"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ZXz-Qb-T34">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -198,7 +199,7 @@
         <scene sceneID="zE6-nc-djr">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ddO-Ze-9gq" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="课程表" id="pmk-aI-dv4"/>
+                    <tabBarItem key="tabBarItem" title="课程表" image="calendar" catalog="system" id="pmk-aI-dv4"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="OjK-8J-R3D">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -275,11 +276,11 @@
             </objects>
             <point key="canvasLocation" x="-307.24637681159425" y="575.89285714285711"/>
         </scene>
-        <!--主页-->
+        <!--拍照-->
         <scene sceneID="2Qw-cl-l5w">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="TPT-gk-YdR" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="主页" id="7DT-q3-Nfa"/>
+                    <tabBarItem key="tabBarItem" title="拍照" image="camera" catalog="system" id="7DT-q3-Nfa"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="bmC-O2-DMW">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -298,6 +299,8 @@
     <resources>
         <image name="PPT1" width="2016" height="1512"/>
         <image name="book" catalog="system" width="64" height="50"/>
+        <image name="calendar" catalog="system" width="64" height="52"/>
+        <image name="camera" catalog="system" width="64" height="48"/>
         <image name="plus" catalog="system" width="64" height="56"/>
     </resources>
 </document>
