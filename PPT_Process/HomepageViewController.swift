@@ -20,7 +20,7 @@ class HomepageViewController: UIViewController {
     // Layer into which to draw bounding box paths.
     var pathLayer: CALayer?
     
-    var tmpImage: UIImage? = nil
+    var srcImage: UIImage? = nil
     
     // Image parameters for reuse throughout app
     var imageWidth: CGFloat = 0
@@ -96,9 +96,8 @@ class HomepageViewController: UIViewController {
         var rect = cropRect
         
         // Reposition origin.
+        rect.origin.y = (1 - rect.origin.y - rect.size.height) * imageHeight
         rect.origin.x *= imageWidth
-        rect.origin.y *= imageHeight
-//        rect.origin.y = (1 - rect.origin.y) * imageHeight
         
         // Rescale normalized coordinates.
         rect.size.width *= imageWidth
@@ -204,14 +203,27 @@ class HomepageViewController: UIViewController {
         }
     }
     
+    func presentNotice(_ title: String) {
+        // Always present alert on main thread.
+        DispatchQueue.main.async {
+            let alertController = UIAlertController(title: title,
+                                                    message: "",
+                                                    preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK",
+                                         style: .default) { _ in
+                                            // Do nothing -- simply dismiss alert.
+            }
+            alertController.addAction(okAction)
+            self.present(alertController, animated: true, completion: nil)
+        }
+    }
+    
     //MARK: - Vision
     
     lazy var rectangleDetectionRequest: VNDetectRectanglesRequest = {
         let rectDetectRequest = VNDetectRectanglesRequest(completionHandler: self.handleDetectedRectangles)
         // Set restricitions
         rectDetectRequest.maximumObservations = 4
-        
-        rectDetectRequest.minimumSize = 0.5
         
         rectDetectRequest.minimumConfidence = 0.6
         
@@ -260,7 +272,8 @@ class HomepageViewController: UIViewController {
             }
             
             guard results.count > 0 else {
-                self.imageView.image = self.tmpImage
+                self.presentNotice("没有找到PPT!")
+                self.imageView.image = self.scaleAndOrient(image: self.srcImage!)
                 return
             }
             
@@ -277,23 +290,26 @@ class HomepageViewController: UIViewController {
 //            MaxRect = previewLayer.layerRectConverted(fromMetadataOutputRect: MaxRect)
 //            print("after", MaxRect)
             
-            if let scale = self.tmpImage?.scale, self.tmpImage?.scale != 1 {
+            if let scale = self.srcImage?.scale, self.srcImage?.scale != 1 {
                 MaxRect.size.height *= scale
                 MaxRect.size.width *= scale
                 MaxRect.origin.x *= scale
                 MaxRect.origin.y *= scale
             }
             
-//            print("before", MaxRect)
-            MaxRect = self.correctRect(cropRect: MaxRect, bounds: self.tmpImage!.size)
-//            print("after", MaxRect)
+            print("before", MaxRect)
+            MaxRect = self.correctRect(cropRect: MaxRect, bounds: self.srcImage!.size)
+            print("after", MaxRect)
             
-            if let croppedImage = self.tmpImage?.cgImage?.cropping(to: MaxRect) {
-                self.tmpImage = UIImage(cgImage: croppedImage)
-
-                print(MaxRect.size.height, MaxRect.size.width, MaxRect.origin.x, MaxRect.origin.y)
-                
-                let correctedImage = self.scaleAndOrient(image: self.tmpImage!)
+            if let croppedImage = self.srcImage?.cgImage?.cropping(to: MaxRect) {
+                self.srcImage = UIImage(cgImage: croppedImage)
+                let flipImageOrientation = self.srcImage!.imageOrientation.rawValue + 1
+                //翻转图片
+                let flipImage =  UIImage(cgImage:(self.srcImage?.cgImage!)!,
+                                         scale:self.srcImage!.scale,
+                                         orientation:UIImage.Orientation(rawValue: flipImageOrientation)!
+                )
+                let correctedImage = self.scaleAndOrient(image: flipImage)
                 
                 // Place photo inside imageView.
 //                print("set image")
@@ -315,7 +331,7 @@ extension HomepageViewController: UIImagePickerControllerDelegate {
                                         didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         // Extract chosen image.
         let originalImage: UIImage = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
-        self.tmpImage = originalImage
+        self.srcImage = originalImage
         
         // Convert from UIImageOrientation to CGImagePropertyOrientation.
         guard let cgOrientation = CGImagePropertyOrientation(rawValue: UInt32(originalImage.imageOrientation.rawValue)) else {
@@ -343,5 +359,6 @@ extension HomepageViewController: UIImagePickerControllerDelegate {
 // MARK: - UINavigationControllerDelegatee
 
 extension HomepageViewController: UINavigationControllerDelegate {
+    
 }
 

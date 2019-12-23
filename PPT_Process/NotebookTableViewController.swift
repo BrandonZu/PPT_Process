@@ -14,7 +14,7 @@ class NotebookTableViewController: UITableViewController {
     // Properties
     var notebookList = [Notebook]()
     
-    var imageNeedClassify: [(UIImage, Date)] = []
+    var imageNeedClassify: [UIImage] = []
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -51,17 +51,19 @@ class NotebookTableViewController: UITableViewController {
 //        self.navigationItem.rightBarButtonItem = self.editButtonItem
         
     }
+    
     // MARK: - Notification Observer Methods
+    
     @objc func receiveNewPPT(notice: Notification) {
-        let current = Date()
+//        let current = Date()
+        let current = Calendar.current.date(bySettingHour: 10, minute: 0, second: 0, of: Date())
         guard let ppt = notice.object as? UIImage else {
             fatalError("Notification wrong: Receive wrong ppt")
         }
-        self.imageNeedClassify.append((ppt, current))
+        self.imageNeedClassify.append(ppt)
         // Ask for Course
         let CourseRequest = Notification(name: Notification.Name(rawValue: "CourseRequest"), object: current)
         NotificationCenter.default.post(CourseRequest)
-        print("After send post!")
     }
     
     @objc func receiveNewCourse(notice: Notification) {
@@ -70,9 +72,7 @@ class NotebookTableViewController: UITableViewController {
         }
         notebookList.append(Notebook(name: course.name))
         // Reload the last row
-        var reloadList: [IndexPath] = [IndexPath]()
-        reloadList.append(IndexPath(row: notebookList.count - 1, section: 0))
-        self.tableView.reloadRows(at: reloadList, with: .automatic)
+        self.tableView.reloadData()
     }
     
     @objc func receiveChangeCourse(notice: Notification) {
@@ -92,9 +92,7 @@ class NotebookTableViewController: UITableViewController {
             fatalError("Target notebook not found")
         }
         else {
-            var reloadList: [IndexPath] = [IndexPath]()
-            reloadList.append(IndexPath(row: pos - 1, section: 0))
-            self.tableView.reloadRows(at: reloadList, with: .automatic)
+            self.tableView.reloadData()
         }
     }
     
@@ -113,6 +111,25 @@ class NotebookTableViewController: UITableViewController {
     }
     
     @objc func receiveCourseAnswer(notice: Notification) {
+        if let answer = notice.object as? Course {
+            // Find a course meets the requirement
+            if imageNeedClassify.count == 0 {
+                fatalError("No images needs to be classified!")
+            }
+            // Classify the oldest image
+            for i in 1..<notebookList.count {
+                if notebookList[i].name == answer.name {
+                    notebookList[i].photos.append(imageNeedClassify[0])
+                    imageNeedClassify.remove(at: 0)
+                    break
+                }
+            }
+        }
+        else {
+            // No course meet the requirement
+            notebookList[0].photos.append(imageNeedClassify[0])
+            imageNeedClassify.remove(at: 0)
+        }
         
     }
     

@@ -15,9 +15,26 @@ class CourseCollectionViewController: UICollectionViewController {
     private let columnNum: Int = 6
     private let rowNum: Int = 12
     private let sectionInsets = UIEdgeInsets(top: 2.0, left: 2.0, bottom: 2.0, right: 2.0)
+    
+    // Class Start Time (Hour, Minute)
+    let classStartTime: [(Int, Int)] = [(8,0), (9,0), (10,0), (11,0), (14,0), (15,0), (16,0), (17,0), (18,30), (19,30), (20,30), (21,30)]
+    
     // Store all the list
     var courseList: [[Course]] = []
-
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        
+        // Load Data
+        for _ in 0..<(rowNum - 1) {
+            courseList.append([Course](repeating: Course(), count: 5))
+        }
+        
+        // Add Notification Observer
+        NotificationCenter.default.addObserver(self, selector: #selector(receiveCoursRequest(notice:)), name: NSNotification.Name(rawValue: "CourseRequest"), object: nil)
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -50,6 +67,48 @@ class CourseCollectionViewController: UICollectionViewController {
             posList.append(IndexPath(item: i * columnNum + course.weekday, section: 0))
         }
         return posList
+    }
+    
+    // MARK: - Notification Observer Methods
+    
+    @objc func receiveCoursRequest(notice: Notification) {
+        guard let date = notice.object as? Date else {
+            fatalError("Course Request Wrong!")
+        }
+        var resultCourse: Course? = nil
+        let calendar = Calendar.current
+        let weekday = calendar.component(.weekday, from: date)
+        print(weekday)
+        // Earlier than the first class
+        if date < calendar.date(bySettingHour: classStartTime[0].0, minute: classStartTime[0].1, second: 0, of: date)! {
+            resultCourse = nil
+        }
+        // Later than the last class
+        else if date > calendar.date(bySettingHour: classStartTime[classStartTime.count - 1].0, minute: classStartTime[classStartTime.count - 1].1, second: 0, of: date)! {
+            resultCourse = nil
+        }
+        else {
+            for i in 0..<(classStartTime.count - 1) {
+                let start = calendar.date(bySettingHour: classStartTime[i].0, minute: classStartTime[i].1, second: 0, of: date)!
+                let end = calendar.date(bySettingHour: classStartTime[i+1].0, minute: classStartTime[i+1].1, second: 0, of: date)!
+                if date >= start && date < end {
+                    let weekday = calendar.component(.weekday, from: date)
+                    // From Monday to Friday
+                    if weekday >= 2 && weekday <= 6 {
+                        if courseList[i][weekday - 2].isEmpty() {
+                            resultCourse = nil
+                        }
+                        else {
+                            resultCourse = courseList[i][weekday - 2]
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Send the answer
+        let CourseAnswer = Notification(name: Notification.Name("CourseAnswer"), object: resultCourse)
+        NotificationCenter.default.post(CourseAnswer)
     }
     
     // MARK: - Actions
@@ -190,7 +249,7 @@ class CourseCollectionViewController: UICollectionViewController {
         if column == 0 || row == 0 {
             return
         }
-        print("Tap at \((row, column))")
+//        print("Tap at \((row, column))")
         // Select a cell
         if courseList[row - 1][column - 1].isEmpty() {
             return
@@ -313,9 +372,7 @@ class CourseCollectionViewController: UICollectionViewController {
                     self.courseList[i - 1][tmpCourse.weekday - 1] = tmpCourse
                 }
                 var IndexList = self.getCourseIndexPath(course: tmpCourse) + self.getCourseIndexPath(course: originalCourse)
-                print(IndexList)
                 IndexList = Array(Set(IndexList))
-                print(IndexList)
                 
                 // Reload cells in syllabus
                 self.collectionView.reloadItems(at: IndexList)
