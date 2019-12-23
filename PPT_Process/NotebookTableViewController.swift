@@ -22,8 +22,7 @@ class NotebookTableViewController: UITableViewController {
         // Add default notebook
         let image1 = UIImage(named: "PPT1")
         let image2 = UIImage(named: "PPT2")
-        let image3 = UIImage(named: "PPT3")
-        notebookList.append(Notebook(name: "未分类笔记", notes: [image1!, image2!, image3!]))
+        notebookList.append(Notebook(name: "未分类笔记", notes: [image1!, image2!]))
         
         // Load data
         

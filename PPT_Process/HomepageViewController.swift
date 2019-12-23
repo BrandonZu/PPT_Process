@@ -17,10 +17,9 @@ class HomepageViewController: UIViewController {
     
     @IBOutlet weak var navigationTitle: UINavigationItem!
     var timer : Timer? = nil
-    
+
     // Layer into which to draw bounding box paths.
     var pathLayer: CALayer?
-    
     var srcImage: UIImage? = nil
     
     // Image parameters for reuse throughout app
@@ -290,7 +289,7 @@ class HomepageViewController: UIViewController {
             }
             
             guard results.count > 0 else {
-                self.presentNotice("没有找到PPT!")
+                self.presentNotice("图片内没有检测到PPT!")
                 self.imageView.image = self.scaleAndOrient(image: self.srcImage!)
                 return
             }
@@ -315,10 +314,7 @@ class HomepageViewController: UIViewController {
                 MaxRect.origin.y *= scale
             }
             
-            print("before", MaxRect)
             MaxRect = self.correctRect(cropRect: MaxRect, bounds: self.srcImage!.size)
-            print("after", MaxRect)
-            
             if let croppedImage = self.srcImage?.cgImage?.cropping(to: MaxRect) {
                 self.srcImage = UIImage(cgImage: croppedImage)
                 let flipImageOrientation = self.srcImage!.imageOrientation.rawValue + 1
@@ -330,7 +326,6 @@ class HomepageViewController: UIViewController {
                 let correctedImage = self.scaleAndOrient(image: flipImage)
                 
                 // Place photo inside imageView.
-//                print("set image")
                 self.imageView.image = correctedImage
             }
         }
@@ -348,6 +343,7 @@ extension HomepageViewController: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController,
                                         didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         // Extract chosen image.
+        
         let originalImage: UIImage = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
         self.srcImage = originalImage
         
